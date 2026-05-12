@@ -36,17 +36,48 @@ public class UserInterface {
             command = Integer.parseInt(scanner.nextLine().trim());
 
             switch (command) {
-                case 1 -> processGetByPriceRequest();
-                case 2 -> processGetByMakeModelRequest();
-                case 3 -> processGetByYearRequest();
-                case 4 -> processGetByColorRequest();
-                case 5 -> processGetByMileageRequest();
-                case 6 -> processByVehicleTypeRequest();
-                case 7 -> processGetAllVehicleRequest();
-                case 8 -> processAddVehicleRequest();
-                case 9 -> processRemoveVehicleRequest();
-                case 99 -> System.out.println("Goodbye!");
-                default -> System.out.println("Invalid option, please try again.");
+                case 1:
+                    processGetByPriceRequest();
+                    break;
+
+                case 2:
+                    processGetByMakeModelRequest();
+                    break;
+
+                case 3:
+                    processGetByYearRequest();
+                    break;
+
+                case 4:
+                    processGetByColorRequest();
+                    break;
+
+                case 5:
+                    processGetByMileageRequest();
+                    break;
+
+                case 6:
+                    processByVehicleTypeRequest();
+                    break;
+
+                case 7:
+                    processGetAllVehicleRequest();
+                    break;
+
+                case 8:
+                    processAddVehicleRequest();
+                    break;
+
+                case 9:
+                    processRemoveVehicleRequest();
+                    break;
+
+                case 99:
+                    System.out.println("Goodbye!");
+                    break;
+
+                default:
+                    System.out.println("Invalid option, please try again.");
             }
         }
     }
@@ -116,23 +147,31 @@ public class UserInterface {
     public static void processAddVehicleRequest() {
         System.out.print("Enter VIN: ");
         int vin = Integer.parseInt(scanner.nextLine().trim());
+
         System.out.print("Enter year: ");
         int year = Integer.parseInt(scanner.nextLine().trim());
+
         System.out.print("Enter make: ");
         String make = scanner.nextLine().trim();
+
         System.out.print("Enter model: ");
         String model = scanner.nextLine().trim();
+
         System.out.print("Enter vehicle type: ");
         String type = scanner.nextLine().trim();
+
         System.out.print("Enter color: ");
         String color = scanner.nextLine().trim();
+
         System.out.print("Enter odometer reading: ");
         int odometer = Integer.parseInt(scanner.nextLine().trim());
+
         System.out.print("Enter price: ");
         double price = Double.parseDouble(scanner.nextLine().trim());
 
         Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
         dealership.addVehicle(vehicle);
+
         DealershipFileManager.saveDealership(dealership);
         System.out.println("Vehicle added successfully!");
     }
