@@ -1,6 +1,7 @@
 package org.example;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class LeaseContract extends Contract {
 
@@ -18,14 +19,16 @@ public class LeaseContract extends Contract {
         return getVehicleSold().getPrice()
                 .multiply(BigDecimal.valueOf(0.07));
     }
-
+//Total price = expected ending value + lease fee
     @Override
     public BigDecimal getTotalPrice() {
-        return null;
+        return getExpectedEndingValue().add(getLeaseFee());
     }
 
+//Monthly payment = total price divided by 36 months
     @Override
     public BigDecimal getMonthlyPayment() {
-        return null;
+        return getTotalPrice()
+                .divide(BigDecimal.valueOf(36), 2, RoundingMode.HALF_UP);
     }
 }
