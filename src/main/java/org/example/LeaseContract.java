@@ -2,10 +2,15 @@ package org.example;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 
 public class LeaseContract extends Contract {
 
-    public LeaseContract(String contractDate, String customerName, String customerEmail, Vehicle vehicleSold) {
+    public LeaseContract(String contractDate,
+                         String customerName,
+                         String customerEmail,
+                         Vehicle vehicleSold) {
+
         super(contractDate, customerName, customerEmail, vehicleSold);
     }
 
@@ -26,9 +31,12 @@ public class LeaseContract extends Contract {
     }
 
 //Monthly payment = total price divided by 36 months
-    @Override
-    public BigDecimal getMonthlyPayment() {
-        return getTotalPrice()
-                .divide(BigDecimal.valueOf(36), 2, RoundingMode.HALF_UP);
-    }
+@Override
+public BigDecimal getMonthlyPayment() {
+
+    BigDecimal financedAmount = getTotalPrice()
+            .multiply(BigDecimal.valueOf(1.04));
+
+    return financedAmount.divide(BigDecimal.valueOf(36), 2, RoundingMode.HALF_UP);
+}
 }
