@@ -93,11 +93,87 @@ public class UserInterface {
         }
     }
 
-    private static void processLeaseRequest() {
+    public static void processLeaseRequest() {
+        System.out.print("Enter VIN of vehicle to lease: ");
+        int vin = Integer.parseInt(scanner.nextLine().trim());
+
+        Vehicle vehicle = null;
+
+        for (Vehicle v : dealership.getAllVehicles()) {
+            if (v.getVin() == vin) {
+                vehicle = v;
+                break;
+            }
+        }
+
+        if (vehicle == null) {
+            System.out.println("Vehicle with VIN " + vin + " not found.");
+            return;
+        }
+
+        System.out.print("Enter contract date YYYYMMDD: ");
+        String date = scanner.nextLine().trim();
+
+        System.out.print("Enter customer name: ");
+        String name = scanner.nextLine().trim();
+
+        System.out.print("Enter customer email: ");
+        String email = scanner.nextLine().trim();
+
+        LeaseContract leaseContract = new LeaseContract(date, name, email, vehicle);
+
+        ContractFileManager contractFileManager = new ContractFileManager();
+        contractFileManager.saveContract(leaseContract);
+
+        dealership.removeVehicle(vin);
+        DealershipFileManager.saveDealership(dealership);
+
+        System.out.println("Lease contract saved and vehicle removed from inventory.");
     }
 
-    private static void processSaleRequest() {
+    public static void processSaleRequest() {
+        System.out.print("Enter VIN of vehicle to sell: ");
+        int vin = Integer.parseInt(scanner.nextLine().trim());
+
+        Vehicle vehicle = null;
+
+        for (Vehicle v : dealership.getAllVehicles()) {
+            if (v.getVin() == vin) {
+                vehicle = v;
+                break;
+            }
+        }
+
+        if (vehicle == null) {
+            System.out.println("Vehicle with VIN " + vin + " not found.");
+            return;
+        }
+
+        System.out.print("Enter contract date YYYYMMDD: ");
+        String date = scanner.nextLine().trim();
+
+        System.out.print("Enter customer name: ");
+        String name = scanner.nextLine().trim();
+
+        System.out.print("Enter customer email: ");
+        String email = scanner.nextLine().trim();
+
+        System.out.print("Finance? YES or NO: ");
+        String financeAnswer = scanner.nextLine().trim();
+
+        boolean finance = financeAnswer.equalsIgnoreCase("YES");
+
+        SalesContract salesContract = new SalesContract(date, name, email, vehicle, finance);
+
+        ContractFileManager contractFileManager = new ContractFileManager();
+        contractFileManager.saveContract(salesContract);
+
+        dealership.removeVehicle(vin);
+        DealershipFileManager.saveDealership(dealership);
+
+        System.out.println("Sale contract saved and vehicle removed from inventory.");
     }
+
 
     private static void displayVehicles(List<Vehicle> vehicles) {
         if (vehicles == null || vehicles.isEmpty()) {
@@ -115,9 +191,11 @@ public class UserInterface {
 
     public static void processGetByPriceRequest() {
         System.out.print("Enter minimum price: ");
-        double min = Double.parseDouble(scanner.nextLine().trim());
+        BigDecimal min = new BigDecimal(scanner.nextLine().trim());
+
         System.out.print("Enter maximum price: ");
-        double max = Double.parseDouble(scanner.nextLine().trim());
+        BigDecimal max = new BigDecimal(scanner.nextLine().trim());
+
         displayVehicles(dealership.getVehiclesByPrice(min, max));
     }
 

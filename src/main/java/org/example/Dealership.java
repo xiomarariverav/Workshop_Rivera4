@@ -1,5 +1,6 @@
 package org.example;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,16 +36,21 @@ public class Dealership {
         return inventory;
     }
 
-    public List<Vehicle> getVehiclesByPrice(double min, double max) {
+    public List<Vehicle> getVehiclesByPrice(BigDecimal min, BigDecimal max) {
         List<Vehicle> results = new ArrayList<>();
+
         for (Vehicle v : inventory) {
-            if (v.getPrice() >= min && v.getPrice() <= max) {
+            BigDecimal price = v.getPrice();
+
+            if (price.compareTo(min) >= 0 &&
+                    price.compareTo(max) <= 0) {
+
                 results.add(v);
             }
         }
+
         return results;
     }
-
     public List<Vehicle> getVehiclesByMakeModel(String make, String model) {
         List<Vehicle> results = new ArrayList<>();
         for (Vehicle v : inventory) {
