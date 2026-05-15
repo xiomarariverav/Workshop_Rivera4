@@ -1,5 +1,6 @@
 package org.example;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,6 +31,8 @@ public class UserInterface {
             System.out.println("7 - List ALL vehicles");
             System.out.println("8 - Add a vehicle");
             System.out.println("9 - Remove a vehicle");
+            System.out.println("10 - Sell a vehicle");
+            System.out.println("11 - Lease a vehicle");
             System.out.println("99 - Quit");
             System.out.print("Enter command: ");
 
@@ -72,6 +75,14 @@ public class UserInterface {
                     processRemoveVehicleRequest();
                     break;
 
+                case 10:
+                    processSaleRequest();
+                    break;
+
+                case 11:
+                    processLeaseRequest();
+                    break;
+
                 case 99:
                     System.out.println("Goodbye!");
                     break;
@@ -80,6 +91,12 @@ public class UserInterface {
                     System.out.println("Invalid option, please try again.");
             }
         }
+    }
+
+    private static void processLeaseRequest() {
+    }
+
+    private static void processSaleRequest() {
     }
 
     private static void displayVehicles(List<Vehicle> vehicles) {
@@ -167,7 +184,7 @@ public class UserInterface {
         int odometer = Integer.parseInt(scanner.nextLine().trim());
 
         System.out.print("Enter price: ");
-        double price = Double.parseDouble(scanner.nextLine().trim());
+        BigDecimal price = new BigDecimal(scanner.nextLine().trim());
 
         Vehicle vehicle = new Vehicle(vin, year, make, model, type, color, odometer, price);
         dealership.addVehicle(vehicle);
