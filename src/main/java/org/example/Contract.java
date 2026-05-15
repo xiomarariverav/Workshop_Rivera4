@@ -1,5 +1,7 @@
 package org.example;
 
+import java.math.BigDecimal;
+
 public abstract class Contract {
 
     private String contractDate;
@@ -46,9 +48,9 @@ public abstract class Contract {
     }
 
 //Every contract must have these methods but each child class will calculate them differently
-    public abstract double getTotalPrice();
+    public abstract BigDecimal getTotalPrice();
 
-    public abstract double getMonthlyPayment();
+    public abstract BigDecimal getMonthlyPayment();
 }
 
 
